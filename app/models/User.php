@@ -150,7 +150,7 @@ class User extends Database
       if ($stm->rowCount() > 0) {
         $user = $stm->fetch(PDO::FETCH_ASSOC);
 
-        if (password_verify($data[1], $user['passwd'])) {
+        if (password_verify($data[1], $user['password_hash'])) {
           return $user;
         } else {
           return false;
