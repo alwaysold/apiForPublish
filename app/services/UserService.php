@@ -99,7 +99,7 @@ class UserService extends Requests
   {
     $method = $this->getMethod();
     $body = $this->parseBodyInput();
-var_dump($body);
+// var_dump($body);
     $user_model = new User();
 
     $result = [];
