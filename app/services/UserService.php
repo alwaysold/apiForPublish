@@ -160,11 +160,12 @@ class UserService extends Requests
 
     if ($method == 'POST') {
 
-      if (!empty($body['email']) && !empty($body['password'])) {
+      if (!empty($body['email']) && !empty($body['password'] && !empty($body['username']))) {
         $email = $body['email'];
         $password = $body['password'];
+        $username = $body['username'];
 
-        $user = $user_model->signIn([$email, $password]);
+        $user = $user_model->signIn([$email, $username, $password]);
 
         if ($user) {
 

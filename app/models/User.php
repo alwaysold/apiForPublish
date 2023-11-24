@@ -145,13 +145,16 @@ class User extends Database
   {
     var_dump($data);
     try {
-      $stm = $this->pdo->prepare("SELECT * FROM Users WHERE email  = ?");
-      $stm->execute([$data[0]]);
+      $stm = $this->pdo->prepare("SELECT *
+      FROM Users
+      WHERE email = ? OR username = ?
+      ");
+      $stm->execute([$data[0],$data[1]]);
 
       if ($stm->rowCount() > 0) {
         $user = $stm->fetch(PDO::FETCH_ASSOC);
 
-        if (password_verify($data[1], $user['password_hash'])) {
+        if (password_verify($data[2], $user['password_hash'])) {
           return $user;
         } else {
           return false;
