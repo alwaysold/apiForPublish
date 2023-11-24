@@ -149,12 +149,12 @@ class User extends Database
       FROM Users
       WHERE email = ? OR username = ?
       ");
-      $stm->execute([$data[0],$data[1]]);
+      $stm->execute([$data[0],$data[0]]);
 
       if ($stm->rowCount() > 0) {
         $user = $stm->fetch(PDO::FETCH_ASSOC);
 
-        if (password_verify($data[2], $user['password_hash'])) {
+        if (password_verify($data[1], $user['password_hash'])) {
           return $user;
         } else {
           return false;
