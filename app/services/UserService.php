@@ -112,10 +112,12 @@ class UserService extends Requests
         $email = $body['email'];
         $username = $body['username'];
         $password = $body['password'];
+
 var_dump($name);
 var_dump($email);
 var_dump($username);
 var_dump($password);
+
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
           if (!$user_model->emailOrUsernameAlreadyExists($email, $username)) {
