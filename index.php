@@ -1,4 +1,4 @@
 <?php
 echo "Hello";
 
-echo "is everything alringh";
+echo "is everything alringh and good";
