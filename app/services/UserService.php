@@ -99,9 +99,8 @@ class UserService extends Requests
   {
     $method = $this->getMethod();
     $body = $this->parseBodyInput();
-// var_dump($body);
     $user_model = new User();
-
+var_dump($user_model);
     $result = [];
 
     if ($method === 'POST') {
@@ -111,11 +110,6 @@ class UserService extends Requests
         $email = $body['email'];
         $username = $body['username'];
         $password = $body['password'];
-
-// var_dump($name);
-// var_dump($email);
-// var_dump($username);
-// var_dump($password);
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
