@@ -97,7 +97,7 @@ class UserService extends Requests
 
   public function create()
   {
-
+echo "Hello";
     $method = $this->getMethod();
     $body = $this->parseBodyInput();
 
