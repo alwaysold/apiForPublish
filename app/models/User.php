@@ -126,13 +126,14 @@ class User extends Database
   public function create($data)
   {
     try {
-      $stm = $this->pdo->prepare("INSERT INTO `Users`(`full_name`, `email`, `password_hash`, `username`) VALUES (?, ?, ?, ?)");
+      $stm = $this->pdo->prepare("INSERT INTO `Users`(`full_name`, `email`, `username`, `password_hash`) VALUES (?, ?, ?, ?)");
 
       $name = $data[0];
       $email = $data[1];
-      $hashedPassword = password_hash($data[2], PASSWORD_DEFAULT);
+      $username = $data[2];
+      $hashedPassword = password_hash($data[3], PASSWORD_DEFAULT);
 
-      $stm->execute([$name, $email, $hashedPassword]);
+      $stm->execute([$name, $email, $username, $hashedPassword]);
 
       return true;
     } catch (PDOException $err) {
@@ -162,17 +163,14 @@ class User extends Database
     }
   }
 
-  public function emailAlreadyExists($email)
+  public function emailOrUsernameAlreadyExists($email, $username)
   {
     try {
-      $stm = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
-      $stm->execute([$email]);
+      $stm = $this->pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ? OR username = ?");
+      $stm->execute([$email, $username]);
+      $count = $stm->fetchColumn();
 
-      if ($stm->rowCount() > 0) {
-        return true;
-      } else {
-        return false;
-      }
+      return $count > 0; // Returns true if the count is greater than 0, indicating existence
     } catch (PDOException $err) {
       return false;
     }

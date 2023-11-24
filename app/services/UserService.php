@@ -95,7 +95,7 @@ class UserService extends Requests
     echo json_encode($result);
   }
 
-  public function index()
+  public function create()
   {
 
     $method = $this->getMethod();
@@ -106,17 +106,18 @@ class UserService extends Requests
     $result = [];
 
     if ($method === 'POST') {
-      if (!empty($body['name']) && !empty($body['email']) && !empty($body['password'])) {
+      if (!empty($body['full_name']) && !empty($body['email']) && !empty($body['username']) && !empty($body['password'])) {
 
-        $name = $body['name'];
+        $name = $body['full_name'];
         $email = $body['email'];
+        $username = $body['username'];
         $password = $body['password'];
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-          if (!$user_model->emailAlreadyExists($email)) {
+          if (!$user_model->emailOrUsernameAlreadyExists($email, $username)) {
 
-            $create_user = $user_model->create([$name, $email, $password]);
+            $create_user = $user_model->create([$name, $email, $username, $password]);
 
             if ($create_user) {
 
