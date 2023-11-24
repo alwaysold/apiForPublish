@@ -97,10 +97,9 @@ class UserService extends Requests
 
   public function create()
   {
-echo "Hello";
     $method = $this->getMethod();
     $body = $this->parseBodyInput();
-
+var_dump($body);
     $user_model = new User();
 
     $result = [];
@@ -113,10 +112,10 @@ echo "Hello";
         $username = $body['username'];
         $password = $body['password'];
 
-var_dump($name);
-var_dump($email);
-var_dump($username);
-var_dump($password);
+// var_dump($name);
+// var_dump($email);
+// var_dump($username);
+// var_dump($password);
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
