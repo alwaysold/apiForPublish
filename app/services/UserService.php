@@ -100,7 +100,7 @@ class UserService extends Requests
     $method = $this->getMethod();
     $body = $this->parseBodyInput();
     $user_model = new User();
-var_dump($user_model);
+// var_dump($user_model);
     $result = [];
 
     if ($method === 'POST') {
