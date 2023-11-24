@@ -166,11 +166,43 @@ class User extends Database
   public function emailOrUsernameAlreadyExists($email, $username)
   {
     try {
-      $stm = $this->pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ? OR username = ?");
+      $stm = $this->pdo->prepare("SELECT COUNT(*) FROM Users WHERE email = ? OR username = ?");
       $stm->execute([$email, $username]);
       $count = $stm->fetchColumn();
 
       return $count > 0; // Returns true if the count is greater than 0, indicating existence
+    } catch (PDOException $err) {
+      return false;
+    }
+  }
+
+  public function emailAlreadyExists($email)
+  {
+    try {
+      $stm = $this->pdo->prepare("SELECT * FROM Users WHERE email = ?");
+      $stm->execute([$email]);
+
+      if ($stm->rowCount() > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (PDOException $err) {
+      return false;
+    }
+  }
+
+  public function usernameAlreadyExists($email)
+  {
+    try {
+      $stm = $this->pdo->prepare("SELECT * FROM Users WHERE username = ?");
+      $stm->execute([$email]);
+
+      if ($stm->rowCount() > 0) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (PDOException $err) {
       return false;
     }
