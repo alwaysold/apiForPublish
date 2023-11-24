@@ -143,6 +143,7 @@ class User extends Database
 
   public function signIn($data)
   {
+    var_dump($data);
     try {
       $stm = $this->pdo->prepare("SELECT * FROM Users WHERE email OR username = ?");
       $stm->execute([$data[0]]);
