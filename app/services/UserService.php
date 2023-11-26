@@ -413,7 +413,7 @@ class UserService extends Requests
         $user = $jwt->validateJWT($token);
 
         if ($user) {
-          $userId = $user->id->user_id;
+          $userId = $user->id;
           var_dump($userId);
           if (!empty($_FILES['avatar']['name'])) {
             $targetDir = "avatar/";
