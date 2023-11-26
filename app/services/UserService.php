@@ -18,14 +18,14 @@ class UserService extends Requests
     if ($method == 'GET') {
 
       $token = $authorization->getAuthorization();
-      var_dump($token);
+      // var_dump($token);
       if ($token) {
         $user = $jwt->validateJWT($token);
 
         if ($user->id) {
 
           $userId = $user->id;
-
+var_dump($userId);
           $userExists = $user_model->list($userId->id);
 
           if ($userExists) {
