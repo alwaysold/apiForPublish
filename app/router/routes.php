@@ -8,6 +8,7 @@ $routes = [
   '/user/forgotpass'                  => 'UserService@changepassword',
   '/user/getotp'                      => 'UserService@getotp',
   '/user/dashboard'                   => 'UserService@dashboard',
+  '/user/uploadAvatar'                => 'UserService@uploadAvatar',
 
   '/'                                 => 'HomeService@index',
 

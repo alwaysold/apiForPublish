@@ -169,12 +169,10 @@ class UserService extends Requests
         if ($user) {
 
           $sanitizedUser = [
-            // "user_id" => $user['user_id'],
             "full_name" => $user['full_name'],
             "username" => $user['username'],
             "avatar" => $user['avatar'],
             "email" => $user['email']
-            // Exclude "password_hash" here
         ];
 
           $result = [
@@ -401,4 +399,52 @@ class UserService extends Requests
 
     echo json_encode($result);
   }
+
+  public function uploadAvatar()
+    {
+        $method = $this->getMethod();
+        $result = [];
+
+        if ($method === 'POST') {
+            if (!empty($_FILES['avatar']['name'])) {
+                $targetDir = "/avatar"; // Specify the directory where you want to store avatars
+                $targetFile = $targetDir . basename($_FILES["avatar"]["name"]);
+                $uploadOk = 1;
+                $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+                // Check file size (adjust as needed)
+                if ($_FILES["avatar"]["size"] > 5000000) { // Set your desired file size limit
+                    $result['error'] = "Avatar file is too large.";
+                    $uploadOk = 0;
+                }
+
+                // Allow certain file formats (modify/add as needed)
+                $allowedExtensions = ["jpg", "jpeg", "png", "gif"];
+                if (!in_array($fileType, $allowedExtensions)) {
+                    $result['error'] = "Only JPG, JPEG, PNG & GIF files are allowed.";
+                    $uploadOk = 0;
+                }
+
+                // Check if $uploadOk is set to 0 by an error
+                if ($uploadOk === 0) {
+                    $result['error'] = "Avatar file was not uploaded.";
+                } else {
+                    // Attempt to move the uploaded file to the specified directory
+                    if (move_uploaded_file($_FILES["avatar"]["tmp_name"], $targetFile)) {
+                        $result['message'] = "Avatar uploaded successfully.";
+                        // Here you might want to save $targetFile path in the database for the user
+                    } else {
+                        $result['error'] = "There was an error uploading your avatar.";
+                    }
+                }
+            } else {
+                $result['error'] = "No avatar selected.";
+            }
+        } else {
+            http_response_code(405);
+            $result['error'] = "HTTP Method not allowed";
+        }
+
+        echo json_encode($result);
+    }
 }
