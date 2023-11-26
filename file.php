@@ -1,6 +1,6 @@
 <?php
 
-$directoryPath = '/path/to/your/directory';
+$directoryPath = '/avatar';
 $command = 'chmod 755 ' . $directoryPath;
 
 $output = shell_exec($command);
