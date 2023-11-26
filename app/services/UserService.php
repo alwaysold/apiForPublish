@@ -407,7 +407,7 @@ class UserService extends Requests
 
         if ($method === 'POST') {
             if (!empty($_FILES['avatar']['name'])) {
-                $targetDir = "/avatar"; // Specify the directory where you want to store avatars
+                $targetDir = "avatar/"; // Specify the directory where you want to store avatars
                 $uploadFile = $_FILES['avatar'];
                 $targetFile = $targetDir . basename($uploadFile['name']);
                 $uploadOk = 1;
