@@ -170,7 +170,8 @@ class UserService extends Requests
 
           $result = [
             "message" => "successfully",
-            "token" => $jwt->generateJWT(["id" => $user])
+            "token" => $jwt->generateJWT(["id" => $user]),
+            "user" => $user
           ];
         } else {
           http_response_code(401);
