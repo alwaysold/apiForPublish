@@ -168,10 +168,19 @@ class UserService extends Requests
 
         if ($user) {
 
+          $sanitizedUser = [
+            "user_id" => $user['user_id'],
+            "full_name" => $user['full_name'],
+            "username" => $user['username'],
+            "avatar" => $user['avatar'],
+            "email" => $user['email']
+            // Exclude "password_hash" here
+        ];
+
           $result = [
             "message" => "successfully",
             "token" => $jwt->generateJWT(["id" => $user]),
-            "user" => $user
+            "user" => $sanitizedUser
           ];
         } else {
           http_response_code(401);
