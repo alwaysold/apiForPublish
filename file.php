@@ -1,6 +1,6 @@
 <?php
 
-$directoryPath = '/app/avatar';
+$directoryPath = '/app/services/avatar';
 $command = 'chmod 755 ' . $directoryPath;
 
 $output = shell_exec($command);
