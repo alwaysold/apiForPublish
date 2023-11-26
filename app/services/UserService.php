@@ -14,6 +14,7 @@ class UserService extends Requests
     $jwt = new JWT();
     $authorization = new Authorization();
 
+    var_dump(time());
     if ($method == 'GET') {
 
       $token = $authorization->getAuthorization();
@@ -414,24 +415,19 @@ class UserService extends Requests
 
         if ($user) {
           $userId = $user->id->user_id;
-          // var_dump($userId);
           if (!empty($_FILES['avatar']['name'])) {
             $targetDir = "avatar/";
             $uploadFile = $_FILES['avatar'];
 
-            // Generate a random filename
             $fileExtension = strtolower(pathinfo($uploadFile['name'], PATHINFO_EXTENSION));
             $newFileName = bin2hex(random_bytes(10)) . '_' . time() . ".$fileExtension";
             $targetFile = $targetDir . $newFileName;
             $uploadOk = 1;
 
-            // Rest of your validation code...
-
             if ($uploadOk === 0) {
               $result['error'] = "Avatar file was not uploaded.";
             } else {
               if (move_uploaded_file($uploadFile['tmp_name'], $targetFile)) {
-                // Use saveAvatar function to update the avatar for the user
                 $avatarSaved = $user_model->saveAvatar($userId, $newFileName);
 
                 if ($avatarSaved) {
@@ -462,92 +458,4 @@ class UserService extends Requests
     echo json_encode($result);
   }
 
-  //   public function uploadAvatar()
-  //   {
-  //     $method = $this->getMethod();
-  //     $result = [];
-
-  //     if ($method === 'POST') {
-  //       if (!empty($_FILES['avatar']['name'])) {
-  //         $targetDir = "avatar/"; // Specify the directory where you want to store avatars 
-  //         $uploadFile = $_FILES['avatar'];
-  //         $targetFile = $targetDir . basename($uploadFile['name']);
-  //         $uploadOk = 1;
-  //         $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-
-  //         // Check file size (adjust as needed)
-  //         if ($uploadFile['size'] > 5000000) { // Set your desired file size limit
-  //           $result['error'] = "Avatar file is too large.";
-  //           $uploadOk = 0;
-  //         }
-
-  //         // Allow certain file formats (modify/add as needed)
-  //         $allowedExtensions = ["jpg", "jpeg", "png", "gif"];
-  //         if (!in_array($fileType, $allowedExtensions)) {
-  //           $result['error'] = "Only JPG, JPEG, PNG & GIF files are allowed.";
-  //           $uploadOk = 0;
-  //         }
-
-  //         // Check if $uploadOk is set to 0 by an error
-  //         if ($uploadOk === 0) {
-  //           $result['error'] = "Avatar file was not uploaded.";
-  //         } else {
-  //           // Attempt to move the uploaded file to the specified directory
-  //           if (move_uploaded_file($uploadFile['tmp_name'], $targetFile)) {
-  //             $result['message'] = "Avatar uploaded successfully.";
-  //             // Here you might want to save $targetFile path in the database for the user
-  //           } else {
-  //             $result['error'] = "There was an error uploading your avatar.";
-  //           }
-  //         }
-  //       } else {
-  //         $result['error'] = "No avatar selected.";
-  //       }
-  //     } else {
-  //       http_response_code(405);
-  //       $result['error'] = "HTTP Method not allowed";
-  //     }
-
-  //     echo json_encode($result);
-  //   }
-
-
-  // public function uploadAvatar()
-  // {
-  //   $method = $this->getMethod();
-  //   $result = [];
-
-  //   if ($method === 'POST') {
-  //     if (!empty($_FILES['avatar']['name'])) {
-  //       $targetDir = "avatar/"; // Specify the directory where you want to store avatars 
-  //       $uploadFile = $_FILES['avatar'];
-
-  //       // Generate a random filename
-  //       $fileExtension = strtolower(pathinfo($uploadFile['name'], PATHINFO_EXTENSION));
-  //       $newFileName = bin2hex(random_bytes(10)) . '_' . time() . ".$fileExtension";
-  //       $targetFile = $targetDir . $newFileName;
-  //       $uploadOk = 1;
-
-  //       // Rest of your validation code...
-
-  //       if ($uploadOk === 0) {
-  //         $result['error'] = "Avatar file was not uploaded.";
-  //       } else {
-  //         if (move_uploaded_file($uploadFile['tmp_name'], $targetFile)) {
-  //           $result['message'] = "Avatar uploaded successfully.";
-  //           $result['newFileName'] = $newFileName; // Include the new filename in the response
-  //         } else {
-  //           $result['error'] = "There was an error uploading your avatar.";
-  //         }
-  //       }
-  //     } else {
-  //       $result['error'] = "No avatar selected.";
-  //     }
-  //   } else {
-  //     http_response_code(405);
-  //     $result['error'] = "HTTP Method not allowed";
-  //   }
-
-  //   echo json_encode($result);
-  // }
 }
