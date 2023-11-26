@@ -14,7 +14,6 @@ class UserService extends Requests
     $jwt = new JWT();
     $authorization = new Authorization();
 
-    var_dump(time());
     if ($method == 'GET') {
 
       $token = $authorization->getAuthorization();

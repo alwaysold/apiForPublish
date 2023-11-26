@@ -126,14 +126,15 @@ class User extends Database
   public function create($data)
   {
     try {
-      $stm = $this->pdo->prepare("INSERT INTO `Users`(`full_name`, `email`, `username`, `password_hash`) VALUES (?, ?, ?, ?)");
+      $stm = $this->pdo->prepare("INSERT INTO `Users`(`full_name`, `email`, `username`, `password_hash`, `signup_at`) VALUES (?, ?, ?, ?, ?)");
 
       $name = $data[0];
       $email = $data[1];
       $username = $data[2];
       $hashedPassword = password_hash($data[3], PASSWORD_DEFAULT);
+      $signuptime = time();
 
-      $stm->execute([$name, $email, $username, $hashedPassword]);
+      $stm->execute([$name, $email, $username, $hashedPassword, $signuptime]);
 
       return true;
     } catch (PDOException $err) {
