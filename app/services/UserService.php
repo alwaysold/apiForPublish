@@ -412,6 +412,9 @@ class UserService extends Requests
                 $uploadOk = 1;
                 $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
+                var_dump($targetDir);
+                var_dump($targetFile);
+                var_dump($fileType);
                 // Check file size (adjust as needed)
                 if ($_FILES["avatar"]["size"] > 5000000) { // Set your desired file size limit
                     $result['error'] = "Avatar file is too large.";
@@ -425,7 +428,7 @@ class UserService extends Requests
                     $uploadOk = 0;
                 }
 
-                var_dump($fileType);
+                // var_dump($fileType);
                 // Check if $uploadOk is set to 0 by an error
                 if ($uploadOk === 0) {
                     $result['error'] = "Avatar file was not uploaded.";
