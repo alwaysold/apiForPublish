@@ -145,7 +145,7 @@ class User extends Database
   {
     // var_dump($data);
     try {
-      $stm = $this->pdo->prepare("SELECT full_name, username, avatar, email
+      $stm = $this->pdo->prepare("SELECT *
       FROM Users
       WHERE email = ? OR username = ?
       ");
