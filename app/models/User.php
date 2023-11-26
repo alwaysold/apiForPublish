@@ -141,6 +141,19 @@ class User extends Database
     }
   }
 
+  public function saveAvatar($id, $filename)
+  {
+    try {
+      $stmt = $this->pdo->prepare("UPDATE Users SET avatar = ? WHERE user_id = ?");
+      $stmt->execute([$filename, $id]);
+
+      return true;
+    } catch (PDOException $err) {
+      return false;
+    }
+  }
+
+
   public function signIn($data)
   {
     // var_dump($data);
@@ -149,7 +162,7 @@ class User extends Database
       FROM Users
       WHERE email = ? OR username = ?
       ");
-      $stm->execute([$data[0],$data[0]]);
+      $stm->execute([$data[0], $data[0]]);
 
       if ($stm->rowCount() > 0) {
         $user = $stm->fetch(PDO::FETCH_ASSOC);

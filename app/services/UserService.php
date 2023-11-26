@@ -448,43 +448,108 @@ class UserService extends Requests
   //     echo json_encode($result);
   //   }
 
-  
+
+  // public function uploadAvatar()
+  // {
+  //   $method = $this->getMethod();
+  //   $result = [];
+
+  //   if ($method === 'POST') {
+  //     if (!empty($_FILES['avatar']['name'])) {
+  //       $targetDir = "avatar/"; // Specify the directory where you want to store avatars 
+  //       $uploadFile = $_FILES['avatar'];
+
+  //       // Generate a random filename
+  //       $fileExtension = strtolower(pathinfo($uploadFile['name'], PATHINFO_EXTENSION));
+  //       $newFileName = bin2hex(random_bytes(10)) . '_' . time() . ".$fileExtension";
+  //       $targetFile = $targetDir . $newFileName;
+  //       $uploadOk = 1;
+
+  //       // Rest of your validation code...
+
+  //       if ($uploadOk === 0) {
+  //         $result['error'] = "Avatar file was not uploaded.";
+  //       } else {
+  //         if (move_uploaded_file($uploadFile['tmp_name'], $targetFile)) {
+  //           $result['message'] = "Avatar uploaded successfully.";
+  //           $result['newFileName'] = $newFileName; // Include the new filename in the response
+  //         } else {
+  //           $result['error'] = "There was an error uploading your avatar.";
+  //         }
+  //       }
+  //     } else {
+  //       $result['error'] = "No avatar selected.";
+  //     }
+  //   } else {
+  //     http_response_code(405);
+  //     $result['error'] = "HTTP Method not allowed";
+  //   }
+
+  //   echo json_encode($result);
+  // }
+
+
   public function uploadAvatar()
   {
     $method = $this->getMethod();
     $result = [];
 
+    $user_model = new User();
+    $jwt = new JWT();
+    $authorization = new Authorization();
+
     if ($method === 'POST') {
-      if (!empty($_FILES['avatar']['name'])) {
-        $targetDir = "avatar/"; // Specify the directory where you want to store avatars 
-        $uploadFile = $_FILES['avatar'];
+      $token = $authorization->getAuthorization();
 
-        // Generate a random filename
-        $fileExtension = strtolower(pathinfo($uploadFile['name'], PATHINFO_EXTENSION));
-        $newFileName = bin2hex(random_bytes(10)) . '_' . time() . ".$fileExtension";
-        $targetFile = $targetDir . $newFileName;
-        $uploadOk = 1;
+      if ($token) {
+        $user = $jwt->validateJWT($token);
 
-        // Rest of your validation code...
+        if ($user) {
+          $userId = $user->id;
 
-        if ($uploadOk === 0) {
-          $result['error'] = "Avatar file was not uploaded.";
-        } else {
-          if (move_uploaded_file($uploadFile['tmp_name'], $targetFile)) {
-            $result['message'] = "Avatar uploaded successfully.";
-            $result['newFileName'] = $newFileName; // Include the new filename in the response
+          if (!empty($_FILES['avatar']['name'])) {
+            $targetDir = "avatar/";
+            $uploadFile = $_FILES['avatar'];
+            // Generate a random filename
+            $fileExtension = strtolower(pathinfo($uploadFile['name'], PATHINFO_EXTENSION));
+            $newFileName = bin2hex(random_bytes(10)) . '_' . time() . ".$fileExtension";
+            $targetFile = $targetDir . $newFileName;
+            $uploadOk = 1;
+
+            // Rest of your validation code...
+
+            if ($uploadOk === 0) {
+              $result['error'] = "Avatar file was not uploaded.";
+            } else {
+              if (move_uploaded_file($uploadFile['tmp_name'], $targetFile)) {
+                // Use saveAvatar function to update the avatar for the user
+                $avatarSaved = $user_model->saveAvatar($userId, $newFileName);
+
+                if ($avatarSaved) {
+                  $result['message'] = "Avatar uploaded successfully.";
+                  $result['newFileName'] = $newFileName;
+                } else {
+                  $result['error'] = "Failed to update avatar.";
+                }
+              } else {
+                $result['error'] = "There was an error uploading your avatar.";
+              }
+            }
           } else {
-            $result['error'] = "There was an error uploading your avatar.";
+            $result['error'] = "No avatar selected.";
           }
+        } else {
+          http_response_code(401);
+          $result['error'] = "Unauthorized, please verify your token";
         }
       } else {
-        $result['error'] = "No avatar selected.";
+        http_response_code(401);
+        $result['error'] = "Unauthorized, can't find token!";
       }
     } else {
       http_response_code(405);
       $result['error'] = "HTTP Method not allowed";
     }
-
     echo json_encode($result);
   }
 }
