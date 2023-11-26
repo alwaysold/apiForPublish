@@ -408,15 +408,13 @@ class UserService extends Requests
         if ($method === 'POST') {
             if (!empty($_FILES['avatar']['name'])) {
                 $targetDir = "/avatar"; // Specify the directory where you want to store avatars
-                $targetFile = $targetDir . basename($_FILES["avatar"]["name"]);
+                $uploadFile = $_FILES['avatar'];
+                $targetFile = $targetDir . basename($uploadFile['name']);
                 $uploadOk = 1;
                 $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-                var_dump($targetDir);
-                var_dump($targetFile);
-                var_dump($fileType);
                 // Check file size (adjust as needed)
-                if ($_FILES["avatar"]["size"] > 5000000) { // Set your desired file size limit
+                if ($uploadFile['size'] > 5000000) { // Set your desired file size limit
                     $result['error'] = "Avatar file is too large.";
                     $uploadOk = 0;
                 }
@@ -428,13 +426,12 @@ class UserService extends Requests
                     $uploadOk = 0;
                 }
 
-                // var_dump($fileType);
                 // Check if $uploadOk is set to 0 by an error
                 if ($uploadOk === 0) {
                     $result['error'] = "Avatar file was not uploaded.";
                 } else {
                     // Attempt to move the uploaded file to the specified directory
-                    if (move_uploaded_file($_FILES["avatar"]["tmp_name"], $targetFile)) {
+                    if (move_uploaded_file($uploadFile['tmp_name'], $targetFile)) {
                         $result['message'] = "Avatar uploaded successfully.";
                         // Here you might want to save $targetFile path in the database for the user
                     } else {
@@ -451,4 +448,5 @@ class UserService extends Requests
 
         echo json_encode($result);
     }
+
 }
