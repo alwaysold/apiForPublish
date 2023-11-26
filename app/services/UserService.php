@@ -414,7 +414,7 @@ class UserService extends Requests
 
         if ($user) {
           $userId = $user->id->user_id;
-
+          var_dump($userId);
           if (!empty($_FILES['avatar']['name'])) {
             $targetDir = "avatar/";
             $uploadFile = $_FILES['avatar'];
