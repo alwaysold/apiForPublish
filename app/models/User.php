@@ -13,7 +13,7 @@ class User extends Database
   public function list($id)
   {
     try {
-      $stm = $this->pdo->prepare("SELECT `user_id`, `full_name`, `email`, `username` FROM `Users` WHERE `user_id` = ?");
+      $stm = $this->pdo->prepare("SELECT `user_id`, `full_name`, `email`, `username`, `avatar` FROM `Users` WHERE `user_id` = ?");
       $stm->execute([$id]);
 
       if ($stm->rowCount() > 0) {
