@@ -25,9 +25,9 @@ class UserService extends Requests
         if ($user->id) {
 
           $userId = $user->id;
-var_dump($userId);
+// var_dump($userId);
 
-          $userExists = $user_model->list($userId->id);
+          $userExists = $user_model->list($userId->user_id);
 
           if ($userExists) {
             $result['data'] = $userExists;
