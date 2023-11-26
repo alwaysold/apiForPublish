@@ -425,6 +425,7 @@ class UserService extends Requests
                     $uploadOk = 0;
                 }
 
+                var_dump($fileType);
                 // Check if $uploadOk is set to 0 by an error
                 if ($uploadOk === 0) {
                     $result['error'] = "Avatar file was not uploaded.";
