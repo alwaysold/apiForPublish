@@ -169,7 +169,7 @@ class UserService extends Requests
         if ($user) {
 
           $sanitizedUser = [
-            "user_id" => $user['user_id'],
+            // "user_id" => $user['user_id'],
             "full_name" => $user['full_name'],
             "username" => $user['username'],
             "avatar" => $user['avatar'],
