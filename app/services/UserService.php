@@ -188,7 +188,6 @@ class UserService extends Requests
     echo json_encode($result);
   }
 
-
   public function forgotpassword()
   {
     $method = $this->getMethod();
@@ -225,7 +224,6 @@ class UserService extends Requests
 
     echo json_encode($result);
   }
-
 
   public function changepassword()
   {
@@ -268,7 +266,6 @@ class UserService extends Requests
 
     echo json_encode($result);
   }
-
 
   public function getotp()
   {
@@ -340,7 +337,6 @@ class UserService extends Requests
 
     echo json_encode($result);
   }
-
 
   public function update()
   {
