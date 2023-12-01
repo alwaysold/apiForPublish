@@ -258,6 +258,20 @@ class User extends Database
     }
   }
 
+
+  public function getUserIdByUsername($username)
+    {
+        try {
+            $stm = $this->pdo->prepare("SELECT user_id FROM Users WHERE username = ?");
+            $stm->execute([$username]);
+
+            $userId = $stm->fetchColumn();
+            return $userId ? $userId : null;
+        } catch (PDOException $err) {
+            return null;
+        }
+    }
+
   // public function storeOTP($email, $otp, $expirationTime)
   // {
   //   try {

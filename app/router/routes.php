@@ -12,7 +12,9 @@ $routes = [
 
   '/'                                 => 'HomeService@index',
 
- 
+  '/feed'                                 => 'FeedService@index',
+  '/'                                 => 'HomeService@index',
+  '/'                                 => 'HomeService@index',
 
   '/test/{id}/{id}/{id}'              => 'TestService@test',
   '/test/{id}/{id}'                   => 'TestService@test',

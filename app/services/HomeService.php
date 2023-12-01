@@ -9,7 +9,7 @@ class HomeService extends Requests
     if ($method == 'GET') {
       http_response_code(200);
       $result = [
-        "message" => "Amit There!",
+        "message" => "hello There!",
         "guide" => "https://apiforcode.dailywith.me/"
       ];
     } else {
