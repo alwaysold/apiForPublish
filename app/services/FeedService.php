@@ -1,6 +1,6 @@
 <?php
 
-class UserService extends Requests
+class FeedService extends Requests
 {
 
     public function index($id)
