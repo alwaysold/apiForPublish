@@ -13,6 +13,7 @@ class FeedService extends Requests
         if ($method == 'GET') {
 
             $feedExists = $feed_model->list($id);
+            var_dump($id);
             var_dump($feedExists);
             if ($feedExists) {
                 $result['data'] = $feedExists;
