@@ -13,6 +13,7 @@ class Feed extends Database
   public function list($num)
   {
     try {
+        echo $num;
       $stm = $this->pdo->prepare("SELECT `title`, `content`, `media_url`, `abstract`, `author_id`, `publication_date` FROM `Papers` LIMIT ?");
       $stm->execute([$num]);
     var_dump($stm);
