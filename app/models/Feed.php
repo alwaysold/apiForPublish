@@ -10,20 +10,20 @@ class Feed extends Database
     $this->pdo = $this->getConnection();
   }
 
-  public function list($num)
+  public function list($id)
   {
     //   echo $num;
-    try {
+    // try {
       $stm = $this->pdo->prepare("SELECT `title`, `content`, `media_url`, `abstract`, `author_id`, `publication_date` FROM `Papers` LIMIT ?");
-      $stm->execute([$num]);
+      $stm->execute([$id]);
     var_dump($stm);
       if ($stm->rowCount() > 0) {
         return $stm->fetch(PDO::FETCH_ASSOC);
       } else {
         return false;
       }
-    } catch (PDOException $err) {
-      return false;
-    }
+    // } catch (PDOException $err) {
+    //   return false;
+    // }
   }
 }
