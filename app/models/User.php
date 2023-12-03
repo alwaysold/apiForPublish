@@ -126,7 +126,7 @@ class User extends Database
   public function create($data)
   {
     // var_dump($data);
-    try {
+    // try {
       $stm = $this->pdo->prepare("INSERT INTO `Users`(`full_name`, `email`, `username`, `password_hash`, `signup_at`) VALUES (?, ?, ?, ?, ?)");
 
       $name = $data[0];
@@ -139,9 +139,9 @@ class User extends Database
 
       var_dump($stm);
       return true;
-    } catch (PDOException $err) {
-      return false;
-    }
+    // } catch (PDOException $err) {
+    //   return false;
+    // }
   }
 
   public function saveAvatar($id, $filename)
@@ -165,6 +165,7 @@ class User extends Database
       FROM Users
       WHERE email = ? OR username = ?
       ");
+
       $stm->execute([$data[0], $data[0]]);
 
       if ($stm->rowCount() > 0) {
