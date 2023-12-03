@@ -114,8 +114,8 @@ class UserService extends Requests
           if (!$user_model->emailAlreadyExists($email)) {
 
             if (!$user_model->usernameAlreadyExists($username)) {
-              $create_user = $user_model->create([$name, $email, $username, $password]);
               var_dump([$name, $email, $username, $password]);
+              $create_user = $user_model->create([$name, $email, $username, $password]);
               if ($create_user) {
                 http_response_code(200);
                 $result = [
