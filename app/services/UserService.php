@@ -111,20 +111,23 @@ class UserService extends Requests
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-          if (!$user_model->emailOrUsernameAlreadyExists($email, $username)) {
+          if (!$user_model->emailAlreadyExists($email)) {
 
-            $create_user = $user_model->create([$name, $email, $username, $password]);
-
-            if ($create_user) {
-
-              http_response_code(200);
-              $result = [
-                "message" => "Created",
-                "login" => BASE_URL . "users/login"
-              ];
+            if (!$user_model->usernameAlreadyExists($username)) {
+              $create_user = $user_model->create([$name, $email, $username, $password]);
+              if ($create_user) {
+                http_response_code(200);
+                $result = [
+                  "message" => "Created",
+                  "login" => BASE_URL . "users/login"
+                ];
+              } else {
+                http_response_code(406);
+                $result['error'] = "Sorry, something went wrong, try again";
+              }
             } else {
               http_response_code(406);
-              $result['error'] = "Sorry, something went wrong, try again";
+              $result['error'] = "Usernmae already exists";
             }
           } else {
             http_response_code(406);
@@ -456,5 +459,4 @@ class UserService extends Requests
     }
     echo json_encode($result);
   }
-
 }

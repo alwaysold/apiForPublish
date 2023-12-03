@@ -210,11 +210,11 @@ class User extends Database
     }
   }
 
-  public function usernameAlreadyExists($email)
+  public function usernameAlreadyExists($username)
   {
     try {
       $stm = $this->pdo->prepare("SELECT * FROM Users WHERE username = ?");
-      $stm->execute([$email]);
+      $stm->execute([$username]);
 
       if ($stm->rowCount() > 0) {
         return true;
