@@ -125,6 +125,7 @@ class User extends Database
 
   public function create($data)
   {
+    var_dump($data);
     try {
       $stm = $this->pdo->prepare("INSERT INTO `Users`(`full_name`, `email`, `username`, `password_hash`, `signup_at`) VALUES (?, ?, ?, ?, ?)");
 
