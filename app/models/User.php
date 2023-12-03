@@ -136,6 +136,7 @@ class User extends Database
 
       $stm->execute([$name, $email, $username, $hashedPassword, $signuptime]);
 
+      var_dump($stm);
       return true;
     } catch (PDOException $err) {
       return false;
