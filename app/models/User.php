@@ -126,7 +126,7 @@ class User extends Database
   public function create($data)
   {
     // var_dump($data);
-    // try {
+    try {
       $stm = $this->pdo->prepare("INSERT INTO `Users`(`full_name`, `email`, `username`, `password_hash`, `signup_at`) VALUES (?, ?, ?, ?, ?)");
 
       $name = $data[0];
@@ -134,14 +134,14 @@ class User extends Database
       $username = $data[2];
       $hashedPassword = password_hash($data[3], PASSWORD_DEFAULT);
       $signuptime = time();
+      var_dump($stm);
 
       $stm->execute([$name, $email, $username, $hashedPassword, $signuptime]);
 
-      var_dump($stm);
       return true;
-    // } catch (PDOException $err) {
-    //   return false;
-    // }
+    } catch (PDOException $err) {
+      return false;
+    }
   }
 
   public function saveAvatar($id, $filename)
