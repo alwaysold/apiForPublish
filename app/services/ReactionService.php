@@ -4,9 +4,9 @@ class ReactionService extends Requests
 {
   public function reactPost($id)
   {
-    $method = $this->getMethod();
+    // $method = $this->getMethod();
     // var_dump($method);
-    if ($method == 'GET') {
+    // if ($method == 'GET') {
 
       $result = [];
       $authorization = new Authorization();
@@ -35,10 +35,10 @@ class ReactionService extends Requests
       } else {
         $result['error'] = "Unauthorized, can't find token!";
       }
-    } else {
-      http_response_code(405);
-      $result['error'] = "HTTP Method not allowed";
-    }
+    // } else {
+    //   http_response_code(405);
+    //   $result['error'] = "HTTP Method not allowed";
+    // }
 
     echo json_encode($result);
   }
