@@ -14,6 +14,7 @@ class Reaction extends Database
         try {
             $stm = $this->pdo->prepare("INSERT INTO `Reactions` (`user_id`, `paper_id`, `reaction_type`) VALUES (?, ?, ?");
             $stm->execute([$user_id, $post_id, $reaction_type]);
+            var_dump($stm);
             return true;
         } catch (PDOException $err) {
             return false;
