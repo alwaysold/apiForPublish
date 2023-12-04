@@ -10,6 +10,7 @@ class Reaction extends Database
 
     public function reactPost($user_id, $reaction_type, $post_id)
     {
+        var_dump([$user_id, $reaction_type, $post_id]);
         try {
             $stm = $this->pdo->prepare("INSERT INTO `Reactions` (`user_id`, `paper_id`, `reaction_type`) VALUES (?, ?, ?");
             $stm->execute([$user_id, $post_id, $reaction_type]);

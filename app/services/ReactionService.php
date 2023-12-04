@@ -29,7 +29,7 @@ class ReactionService extends Requests
           if ($doneReaction) {
             $result['data'] = "reacted!";
           } else {
-            $result['error'] = "Can't be reacted found.";
+            $result['error'] = "Can't be reacted!";
           }
         } else {
           $result['error'] = "Unauthorized, please verify your token.";
