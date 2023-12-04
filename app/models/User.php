@@ -134,7 +134,7 @@ class User extends Database
       $username = $data[2];
       $hashedPassword = password_hash($data[3], PASSWORD_DEFAULT);
       $signuptime = time();
-      var_dump($stm);
+      // var_dump($stm);
 
       $stm->execute([$name, $email, $username, $hashedPassword, $signuptime]);
 
