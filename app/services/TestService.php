@@ -3,6 +3,6 @@ class TestService extends Requests
 {
   public function test($id)
   {
-    echo json_encode($id[0]);
+    echo json_encode($id);
   }
 }

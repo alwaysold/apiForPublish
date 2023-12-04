@@ -9,7 +9,7 @@ class ReactionService extends Requests
     $jwt = new JWT();
 
     $reactionType = $id[0];
-    $reactionOnPost = $id[1];
+    $reactionPostId = $id[1];
 
     $token = $authorization->getAuthorization();
     if ($token) {
@@ -17,13 +17,13 @@ class ReactionService extends Requests
       if ($user) {
         $userId = $user->id;
 
-        $follower = new Follower();
-        $followers = $follower->listFollowers($userId);
+        $reaction = new Reaction();
+        $doneReaction = $reaction->reactPost($userId, $reactionType, $reactionPostId);
 
-        if ($followers !== false) {
-          $result['data'] = $followers;
+        if ($doneReaction) {
+          $result['data'] = "reacted!";
         } else {
-          $result['error'] = "No followers found.";
+          $result['error'] = "Can't be reacted found.";
         }
       } else {
         $result['error'] = "Unauthorized, please verify your token.";
