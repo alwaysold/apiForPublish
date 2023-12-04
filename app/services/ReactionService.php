@@ -4,9 +4,9 @@ class ReactionService extends Requests
 {
   public function reactPost($id)
   {
-    // $method = $this->getMethod();
+    $method = $this->getMethod();
     // var_dump($method);
-    // if ($method == 'GET') {
+    if ($method == 'GET') {
 
       $result = [];
       $authorization = new Authorization();
@@ -22,14 +22,20 @@ class ReactionService extends Requests
         if ($user) {
           $userId = $user->id->user_id;
 
-          // var_dump($userId->user_id);
           $reaction = new Reaction();
-          $doneReaction = $reaction->reactPost($userId, $reactionType, $reactionPostId);
+          $CheckReacted = $reaction->checkReacted($userId, $reactionPostId);
 
-          if ($doneReaction) {
-            $result['data'] = "reacted!";
+          if ($CheckReacted) {
+            $result['data'] = "already Reacted!";
           } else {
-            $result['error'] = "Can't be reacted!";
+            // var_dump($userId->user_id);
+            $doneReaction = $reaction->reactPost($userId, $reactionType, $reactionPostId);
+
+            if ($doneReaction) {
+              $result['data'] = "reacted!";
+            } else {
+              $result['error'] = "Can't be reacted!";
+            }
           }
         } else {
           $result['error'] = "Unauthorized, please verify your token.";
@@ -37,10 +43,10 @@ class ReactionService extends Requests
       } else {
         $result['error'] = "Unauthorized, can't find token!";
       }
-    // } else {
-    //   http_response_code(405);
-    //   $result['error'] = "HTTP Method not allowed";
-    // }
+    } else {
+      http_response_code(405);
+      $result['error'] = "HTTP Method not allowed";
+    }
 
     echo json_encode($result);
   }
