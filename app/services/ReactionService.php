@@ -20,9 +20,9 @@ class ReactionService extends Requests
       if ($token) {
         $user = $jwt->validateJWT($token);
         if ($user) {
-          $userId = $user->id;
+          $userId = $user->id->user_id;
 
-          var_dump($userId->user_id);
+          // var_dump($userId->user_id);
           $reaction = new Reaction();
           $doneReaction = $reaction->reactPost($userId, $reactionType, $reactionPostId);
 
