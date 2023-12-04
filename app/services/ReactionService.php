@@ -5,7 +5,7 @@ class ReactionService extends Requests
   public function reactPost($id)
   {
     $method = $this->getMethod();
-    if ($method === 'get') {
+    if ($method == 'get') {
 
       $result = [];
       $authorization = new Authorization();
