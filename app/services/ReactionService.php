@@ -16,12 +16,13 @@ class ReactionService extends Requests
       $reactionPostId = $id[1];
 
       $token = $authorization->getAuthorization();
-      var_dump($token);
+      // var_dump($token);
       if ($token) {
         $user = $jwt->validateJWT($token);
         if ($user) {
           $userId = $user->id;
 
+          var_dump($userId);
           $reaction = new Reaction();
           $doneReaction = $reaction->reactPost($userId, $reactionType, $reactionPostId);
 
