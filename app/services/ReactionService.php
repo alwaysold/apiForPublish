@@ -4,32 +4,39 @@ class ReactionService extends Requests
 {
   public function reactPost($id)
   {
-    $result = [];
-    $authorization = new Authorization();
-    $jwt = new JWT();
+    $method = $this->getMethod();
+    if ($method === 'get') {
 
-    $reactionType = $id[0];
-    $reactionPostId = $id[1];
+      $result = [];
+      $authorization = new Authorization();
+      $jwt = new JWT();
 
-    $token = $authorization->getAuthorization();
-    if ($token) {
-      $user = $jwt->validateJWT($token);
-      if ($user) {
-        $userId = $user->id;
+      $reactionType = $id[0];
+      $reactionPostId = $id[1];
 
-        $reaction = new Reaction();
-        $doneReaction = $reaction->reactPost($userId, $reactionType, $reactionPostId);
+      $token = $authorization->getAuthorization();
+      if ($token) {
+        $user = $jwt->validateJWT($token);
+        if ($user) {
+          $userId = $user->id;
 
-        if ($doneReaction) {
-          $result['data'] = "reacted!";
+          $reaction = new Reaction();
+          $doneReaction = $reaction->reactPost($userId, $reactionType, $reactionPostId);
+
+          if ($doneReaction) {
+            $result['data'] = "reacted!";
+          } else {
+            $result['error'] = "Can't be reacted found.";
+          }
         } else {
-          $result['error'] = "Can't be reacted found.";
+          $result['error'] = "Unauthorized, please verify your token.";
         }
       } else {
-        $result['error'] = "Unauthorized, please verify your token.";
+        $result['error'] = "Unauthorized, can't find token!";
       }
     } else {
-      $result['error'] = "Unauthorized, can't find token!";
+      http_response_code(405);
+      $result['error'] = "HTTP Method not allowed";
     }
 
     echo json_encode($result);
