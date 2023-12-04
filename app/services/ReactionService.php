@@ -5,6 +5,7 @@ class ReactionService extends Requests
   public function reactPost($id)
   {
     $method = $this->getMethod();
+    var_dump($method);
     if ($method == 'get') {
 
       $result = [];
