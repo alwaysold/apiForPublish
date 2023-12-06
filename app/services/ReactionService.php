@@ -26,6 +26,7 @@ class ReactionService extends Requests
           $CheckReacted = $reaction->checkReacted($userId, $reactionPostId);
 
           if ($CheckReacted) {
+            http_response_code(405);
             $result['data'] = "already Reacted!";
           } else {
             // var_dump($userId->user_id);
@@ -34,6 +35,7 @@ class ReactionService extends Requests
             if ($doneReaction) {
               $result['data'] = "reacted!";
             } else {
+              http_response_code(405);
               $result['error'] = "Can't be reacted!";
             }
           }
