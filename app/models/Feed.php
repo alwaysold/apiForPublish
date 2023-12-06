@@ -34,7 +34,7 @@ class Feed extends Database
                 (
                     SELECT 
                         paper_id,
-                        SUM(reaction_type = 1) AS count_type_1,
+                        SUM(reaction_type = 1) AS like,
                         SUM(reaction_type = 2) AS count_type_2,
                         SUM(reaction_type = 3) AS count_type_3,
                         SUM(reaction_type = 4) AS count_type_4,
