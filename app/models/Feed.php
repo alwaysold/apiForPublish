@@ -23,22 +23,22 @@ class Feed extends Database
                 p.abstract, 
                 p.author_id, 
                 p.publication_date,
-                COALESCE(reactions.like, 0) AS like,
-                COALESCE(reactions.dislike, 0) AS dislike,
-                COALESCE(reactions.celebrate, 0) AS celebrate,
-                COALESCE(reactions.insightfull, 0) AS insightfull,
-                COALESCE(reactions.support, 0) AS support
+                COALESCE(reactions.like, 0) AS `like`,
+                COALESCE(reactions.dislike, 0) AS `dislike`,
+                COALESCE(reactions.celebrate, 0) AS `celebrate`,
+                COALESCE(reactions.insightfull, 0) AS `insightfull`,
+                COALESCE(reactions.support, 0) AS `support`
             FROM 
                 Papers p
             LEFT JOIN 
                 (
                     SELECT 
                         paper_id,
-                        SUM(reaction_type = 1) AS like,
-                        SUM(reaction_type = 2) AS dislike,
-                        SUM(reaction_type = 3) AS celebrate,
-                        SUM(reaction_type = 4) AS insightfull,
-                        SUM(reaction_type = 5) AS support
+                        SUM(reaction_type = 1) AS `like`,
+                        SUM(reaction_type = 2) AS `dislike`,
+                        SUM(reaction_type = 3) AS `celebrate`,
+                        SUM(reaction_type = 4) AS `insightfull`,
+                        SUM(reaction_type = 5) AS `support`
                     FROM 
                         Reactions
                     GROUP BY 
