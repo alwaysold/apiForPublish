@@ -173,7 +173,7 @@ class UserService extends Requests
           $sanitizedUser = [
             "full_name" => $user['full_name'],
             "username" => $user['username'],
-            "avatar" => $user['avatar'],
+            // "avatar" => $user['avatar'],
             "email" => $user['email']
           ];
 

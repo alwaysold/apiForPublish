@@ -12,8 +12,8 @@ $routes = [
 
   '/'                                 => 'HomeService@index',
 
-  '/feed/{id}'                                 => 'FeedService@index',
-  '/react/{id}/{id}'                                 => 'ReactionService@reactPost',
+  '/feed/{id}'                        => 'FeedService@index',
+  '/react/{id}/{id}'                  => 'ReactionService@reactPost',
   '/'                                 => 'HomeService@index',
 
   '/test/{id}/{id}/{id}'              => 'TestService@test',
