@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 //   'http://localhost:5173',
 //   'https://code.dailywith.me'
 // ];
-
 // if (in_array($_SERVER['HTTP_ORIGIN'], $allowedOrigins)) {
 //     header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
 //     header("Access-Control-Allow-Methods: *");
